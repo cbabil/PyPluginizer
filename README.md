@@ -13,19 +13,19 @@ Network intruder detector
 </details>
 
 ## Getting Started
-Clone this repo
-create a virtual environment
-install the requirements
+Clone this repo<br>
+create a virtual environment<br>
+install the requirements<br>
 
 ### Prerequisites
-python 3.6+, python virtual environment
+python 3.6+, python virtual environment<br>
 
 ### Usage
 
-cd pidetectivevirtualenv
-source bin/activate
-cd ~/source/PI-Detective
-python3 -m src --ip <ip address> --inet 0
+cd pidetectivevirtualenv<br>
+source bin/activate<br>
+cd ~/source/PI-Detective<br>
+python3 -m src --ip <ip address> --inet 0<br>
 
 ## Support
 Reach out to the maintainer at the following places:
