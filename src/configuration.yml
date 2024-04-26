@@ -1,0 +1,18 @@
+app:
+  name: "Pi-Detective"
+  description: "Pi Detective network scanner"
+
+  # Logger
+  logger:
+    level: "INFO"
+    format: "%(asctime)s,%(msecs)03d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s"
+    #format: "%(asctime)s - %(name)s - [%(levelname)s] - %(message)s"
+    #format: "[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s','%m-%d %H:%M:%S')"
+
+  # Scanners plugins
+  scanners:
+    directory: ./src/plugins/scanners
+
+  # Connectors plugins
+  connectors:
+    directory: ./src/plugins/connectors
