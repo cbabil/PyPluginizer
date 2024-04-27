@@ -21,6 +21,9 @@ class PluginManager:
         """Discover plugins in the given folder."""
         self.logger.info("Discovering plugins in {}".format(plugin_folder))
         for module_path, dirs, files in os.walk(plugin_folder):
+            if "IGNORE" in files:  # Check if the IGNORE file exists
+                self.logger.info("Plugin ignored: {}".format(module_path))
+                continue  # Skip this plugin if IGNORE file exists
             for file_name in files:
                 if file_name.endswith(".py") and file_name != "__init__.py" and file_name == "plugin.py":
                     relative_module_name = os.path.basename(module_path)  # Get the last directory name
@@ -57,28 +60,20 @@ class PluginManager:
     def register(self, **kwargs):
         """Register all classes from plugins."""
         for module_name, module in self.loaded_plugins.items():
-            print("Processing module:", module_name)
             try:
                 module_path = getattr(module, '__file__', None)
                 if module_path is None:
-                    print("Module path not found for module: {}".format(module_name))
                     self.logger.error("Module file path not found for module: {}".format(module_name))
                     continue
-                print("Module path:", module_path)
                 module_path = os.path.abspath(module_path)
                 module_directory = os.path.dirname(module_path)
-            except AttributeError as e:
-                print("AttributeError occurred:", e)
+            except AttributeError:
                 self.logger.error("Invalid module object for module: {}".format(module_name))
                 continue
 
-            print("Module:", module_name)
-            print("Module dict:", module.__dict__)
             for name, obj in module.__dict__.items():
-                
                 if isinstance(obj, type):
                     plugin_instance = obj(**kwargs)
-                    print("Created plugin instance:", plugin_instance)
                     self.registered_plugins[name] = plugin_instance
                     # this should be plugin_registered
                     # instead of plugins
