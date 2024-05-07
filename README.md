@@ -124,7 +124,7 @@ To change the version of a plugin, edit the `VERSION` file in the plugin directo
 ## Support
 Reach out to the maintainer at the following places:
 
-- [GitHub discussions](https://github.com/pypluginizer/discussions)
+- [GitHub discussions](https://github.com/cbabil/PyPluginizer/discussions)
 
 
 ## License
