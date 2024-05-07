@@ -7,7 +7,7 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Configuratio](#configuration)
+  - [Configuration](#configuration)
   - [Usage](#usage)
 - [Support](#support)
 - [License](#license)
@@ -65,11 +65,11 @@ app:
 
 This configuration file (configuration.yaml) defines:
 
-**app**: Details about the PyPluginizer application.
-**logger**: Configuration for the logging system.
-**core**: Directory where core plugins are located.
-**users**: Directory where user plugins are located.
-**exporters**: Directory where exporter plugins are located.
+**app**: Details about the PyPluginizer application.<br>
+**logger**: Configuration for the logging system.<br>
+**core**: Directory where core plugins are located.<br>
+**users**: Directory where user plugins are located.<br>
+**exporters**: Directory where exporter plugins are located.<br>
 
 You can modify this configuration file according to your requirements.
 
@@ -107,15 +107,15 @@ To get started with PyPluginizer, follow these steps:
 
 The How-To section provides guidance on common tasks related to PyPluginizer.
 
-### Ignoring a Plugin
+#### Ignoring a Plugin
 
 To ignore a plugin, simply create a blank `IGNORE` file in the plugin directory.
 
-### Defining Dependencies
+#### Defining Dependencies
 
 To define dependencies for a plugin, create a `DEPENDENCY` file in the plugin directory and list the dependent plugin names in the order of dependencies.
 
-### Changing Plugin Version
+#### Changing Plugin Version
 
 To change the version of a plugin, edit the `VERSION` file in the plugin directory.
 
