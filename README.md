@@ -90,18 +90,18 @@ To get started with PyPluginizer, follow these steps:
    make setup
    ```
 4. **Run the Application**: Execute the following command to run the application:
-  ```bash
-  make run
-  ```
+   ```bash
+   make run
+   ```
 5. **Run Tests**: To run the unit tests using pytest, use the following command:
-  ```bash
-  make test
-  ```
+   ```bash
+   make test
+   ```
 6. **Clean Up**: Before running make clean, make sure to deactivate the virtual environment:
-  ```bash
-  deactivate
-  make clean
-  ```
+   ```bash
+   deactivate
+   make clean
+   ```
 
 ### How-To
 
