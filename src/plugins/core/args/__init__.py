@@ -1,5 +1,5 @@
 import os
-from src.plugins.scanners.vendor.plugin import Vendor
+from src.plugins.core.args.plugin import Args
 
 
 def get_version():
@@ -11,4 +11,4 @@ def get_version():
 __version__ = get_version()
 
 
-__all__ = ['__version__', 'Vendor']
+__all__ = ['__version__', 'Args']

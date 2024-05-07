@@ -1,5 +1,5 @@
 import os
-from src.plugins.scanners.test.plugin import Test
+from src.plugins.users.plugin1.plugin import Test
 
 
 def get_version():

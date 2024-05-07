@@ -1,6 +1,6 @@
 app:
-  name: "Pi-Detective"
-  description: "Pi Detective network scanner"
+  name: "PyPluginizer"
+  description: "A Plugin framework written in python"
 
   # Logger
   logger:
@@ -9,10 +9,14 @@ app:
     #format: "%(asctime)s - %(name)s - [%(levelname)s] - %(message)s"
     #format: "[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s','%m-%d %H:%M:%S')"
 
-  # Scanners plugins
-  scanners:
-    directory: ./src/plugins/scanners
+  # Core plugins
+  core:
+    directory: ./src/plugins/core
+    
+  # Users plugins
+  users:
+    directory: ./src/plugins/users
 
-  # Connectors plugins
-  connectors:
-    directory: ./src/plugins/connectors
+  # plugins responsible for exporting data in a particular format.
+  exporters:
+    directory: ./src/plugins/exporters

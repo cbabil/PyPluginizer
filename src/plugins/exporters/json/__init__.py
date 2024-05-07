@@ -1,5 +1,5 @@
 import os
-from src.plugins.scanners.ping.plugin import Ping
+from src.plugins.exporters.json.plugin import JsonExporter
 
 
 def get_version():
@@ -11,4 +11,4 @@ def get_version():
 __version__ = get_version()
 
 
-__all__ = ['__version__', 'Ping']
+__all__ = ['__version__', 'JsonExporter']

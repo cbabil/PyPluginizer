@@ -1,4 +1,5 @@
 import os
+from src.plugins.users.plugin2.plugin import Test1
 
 
 def get_version():
@@ -10,4 +11,4 @@ def get_version():
 __version__ = get_version()
 
 
-__all__ = ['__version__']
+__all__ = ['__version__', 'Test1']

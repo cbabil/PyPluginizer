@@ -1,5 +1,5 @@
 import os
-from src.plugins.scanners.arp.plugin import Arp
+from src.plugins.users.plugin3.plugin import Test2
 
 
 def get_version():
@@ -10,4 +10,5 @@ def get_version():
 
 __version__ = get_version()
 
-__all__ = ['__version__', 'Arp']
+
+__all__ = ['__version__', 'Test2']
