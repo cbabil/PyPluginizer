@@ -39,7 +39,7 @@ To install PyPluginizer, you'll need to clone the repository to your local machi
 
 ### Configuration
 
-The configuration file `config.yaml` controls various aspects of PyPluginizer:
+The configuration file `configuration.yaml` controls various aspects of PyPluginizer:
 
 ```yaml
 app:
