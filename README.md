@@ -1,6 +1,6 @@
 # PyPluginizer
 [![CodeQL](https://github.com/cbabil/PyPluginizer/actions/workflows/codeql.yml/badge.svg)](https://github.com/cbabil/PyPluginizer/actions/workflows/codeql.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/cbabil/PyPluginizer/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/cbabil/PyPluginizer/master/LICENSE)
 <br><span style="font-size:larger;">A Versatile Plugin Framework written in python</span>
 
 <details open="open">
