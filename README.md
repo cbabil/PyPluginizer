@@ -1,6 +1,6 @@
 # PyPluginizer
 [![CodeQL](https://github.com/cbabil/PyPluginizer/actions/workflows/codeql.yml/badge.svg)](https://github.com/cbabil/PyPluginizer/actions/workflows/codeql.yml)
-<span style="font-size:larger;">A Versatile Plugin Framework written in python</span>
+<br><span style="font-size:larger;">A Versatile Plugin Framework written in python</span>
 
 <details open="open">
 <summary>Table of Contents</summary>
