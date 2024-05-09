@@ -1,5 +1,5 @@
+# -*- coding: utf-8 -*-
 # lib/logger.py
-
 import logging
 
 

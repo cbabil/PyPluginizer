@@ -1,31 +1,35 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import click
-from src import *
-from src.lib.logger import setup_logger
+
+from src import __version__
 from src.lib import config
 from src.lib.handler import PluginHandler
+from src.lib.logger import setup_logger
 
 
-def logs(config):
-    level = config['app']['logger']['level']
-    format = config['app']['logger']['format']
-    return (level, format)
+def logs(configuration):
+    """Return the logger format and level from the configuration file"""
+    loglevel = configuration['app']['logger']['level']
+    logformat = configuration['app']['logger']['format']
+    return (loglevel, logformat)
 
 
-def app(config):
-    return config['app']['name']
+def app(configuration):
+    """Return the application name from the configuration file"""
+    return configuration['app']['name']
 
 
 @click.command()
-@click.option('--conf',
-              required=False,
-              default="./src/configuration.yml",
-              help='Configuration file to use')
+@click.option(
+    '--conf',
+    required=False,
+    default='./src/configuration.yml',
+    help='Configuration file to use',
+)
 @click.pass_context
 def main(ctx, conf):
-
+    """Main entry point for the application."""
     # Parsing the configuration file
     configuration = config.yaml_parser(conf)
 
@@ -33,14 +37,14 @@ def main(ctx, conf):
     #   read the logger format from yml file
     #   if not defined default to something
     #   use the lib/log.py file for this
-    (level, format) = logs(configuration)
-    logger = setup_logger(level, format)
-    logger.info("Running {} version {}".format(app(configuration), __version__))
-    logger.info("Using configuration file: {}".format(conf))
+    (loglevel, logformat) = logs(configuration)
+    logger = setup_logger(loglevel, logformat)
+    logger.info('Running %s version %s', app(configuration), __version__)
+    logger.info('Using configuration file: %s', conf)
 
     # construct dictionary of all args
     args_dict = ctx.params
-    logger.debug("Args: {}".format(args_dict))
+    logger.debug('Args: %s', args_dict)
 
     # Construct PluginHandler instance
     # Process core plugins

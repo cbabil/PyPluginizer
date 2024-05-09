@@ -1,6 +1,8 @@
 # PyPluginizer
 [![CodeQL](https://github.com/cbabil/PyPluginizer/actions/workflows/codeql.yml/badge.svg)](https://github.com/cbabil/PyPluginizer/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/cbabil/PyPluginizer/master/LICENSE)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <br><span style="font-size:larger;">A Versatile Plugin Framework written in python</span>
 
 <details open="open">
@@ -56,7 +58,7 @@ app:
   # Core plugins
   core:
     directory: ./src/plugins/core
-    
+
   # Users plugins
   users:
     directory: ./src/plugins/users

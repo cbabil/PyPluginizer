@@ -12,7 +12,7 @@ app:
   # Core plugins
   core:
     directory: ./src/plugins/core
-    
+
   # Users plugins
   users:
     directory: ./src/plugins/users

@@ -50,6 +50,10 @@ setup: ## Install the package in development mode including all dependencies ins
 	${PYTHON_VENV} -m pip install --upgrade pip
 	@echo -e "${COLOR_YELLOW}Installing dependencies...${COLOR_RESET}"
 	$(PIP_VENV) install -r requirements.txt
+	@echo -e "${COLOR_YELLOW}Installing pre-commit...${COLOR_RESET}"
+	export PRE_COMMIT_HOME=./$(VENV)/.cache/pre-commit
+	pre-commit install
+	@echo -e "${COLOR_GREEN}Setup completed...${COLOR_RESET}"
 
 venv:  ## Create virtualenv environment on local directory.
 	@$(create-venv)
@@ -64,13 +68,12 @@ test: ## Run tests quickly with pytest
 
 # -------------------------------------- Clean Up  --------------------------------------
 .PHONY: clean
-clean: deactivate clean-venv clean-pyc clean-test ## Remove all virtual environment, test, coverage and Python artefacts
-
+clean: deactivate clean-pyc clean-test clean-logs clean-pre-commit clean-venv ## Remove all virtual environment, test, logs, coverage, pre-commit and Python artiffacts
 
 deactivate: ## Deactivate virtual environment
 	@echo -e "${COLOR_YELLOW}Checking if virtual environment is still active...${COLOR_RESET}"
 	@if [ "$$VIRTUAL_ENV" ]; then \
-	echo -e "${COLOR_RED}Please run 'deactivate' to deactivate the virtual environment before run 'make clean'.${COLOR_RESET}"; \
+	echo -e "${COLOR_RED}Please run 'deactivate' to deactivate the virtual environment before running 'make clean'.${COLOR_RESET}"; \
 		exit 1; \
 	else \
 		echo -e "${COLOR_GREEN}Virtual environment is not active. Proceeding with clean up.${COLOR_RESET}"; \
@@ -80,14 +83,14 @@ clean-venv: ## Remove virtual environment
 	@echo -e "${COLOR_YELLOW}Removing virtual environment $(VENV)...${COLOR_RESET}"
 	rm -fr $(VENV)
 
-clean-pyc: ## Remove Python file artefacts
+clean-pyc: ## Remove Python file artifacts
 	@echo -e "${COLOR_YELLOW}Removing Python file artifacts...${COLOR_RESET}"
 	find . -name '*.pyc' -exec rm -rf {} +
 	find . -name '*.pyo' -exec rm -rf {} +
 	find . -name '*~' -exec rm -rf {} +
 	find . -name '__pycache__' -exec rm -fr {} +
 
-clean-test: ## Remove test and coverage artefacts
+clean-test: ## Remove test and coverage artifacts
 	@echo -e "${COLOR_YELLOW}Removing test and coverage artifacts...${COLOR_RESET}"
 	rm -fr .tox/
 	rm -fr .pytest_cache
@@ -95,3 +98,11 @@ clean-test: ## Remove test and coverage artefacts
 	rm -fr .coverage
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
+
+clean-logs: ## Remove logs
+	@echo -e "${COLOR_YELLOW}Removing logs...${COLOR_RESET}"
+	find . -name '*.log' -exec rm -rf {} +
+
+clean-pre-commit: ## Remove pre-commit artifacts
+	@echo -e "${COLOR_YELLOW}Removing pre-commit artifacts...${COLOR_RESET}"
+	rm -fr .git/hooks/pre-commit
