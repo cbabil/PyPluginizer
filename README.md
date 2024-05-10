@@ -10,7 +10,7 @@
 PyPluginizer is a dynamic Python plugin framework tailored to streamline the creation of modular applications and extendable systems. Crafted with simplicity in mind, it offers ease of use and clarity. Engineered for extensibility and adaptability, it ensures seamless maintenance and expansion of projects.
 
 ## Full Documentation
-See the [Wiki](https://cbabil.github.io/PyPluginizer/Wiki) for full documentation, examples, and other information.
+See the [Wiki](https://github.com/cbabil/PyPluginizer/wiki) for full documentation, examples, and other information.
 
 
 ## Bug and questions
