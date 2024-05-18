@@ -10,8 +10,8 @@ class Test:
             setattr(self, key, value)
 
     def execute(self):
-        self.logger.info('Executing plugin')
+        self.logger.info("Executing plugin")
 
     def process_results(self):
-        self.logger.info('Processing results for plugin')
-        self.hooks['json'].trigger()
+        self.logger.info("Processing results for plugin")
+        self.hooks["json"].trigger()

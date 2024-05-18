@@ -3,14 +3,14 @@
 import logging
 
 
-def setup_logger(level='INFO', format='%(asctime)s - %(levelname)s - %(message)s'):
+def setup_logger(level="INFO", format="%(asctime)s - %(levelname)s - %(message)s"):
     """Set up logger configuration."""
     # Create a logger
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.getLevelName(level.upper()))
 
     # Create a file handler
-    file_handler = logging.FileHandler('plugin_manager.log')
+    file_handler = logging.FileHandler("plugin_manager.log")
     file_handler.setLevel(logging.getLevelName(level.upper()))
 
     # Create a console handler

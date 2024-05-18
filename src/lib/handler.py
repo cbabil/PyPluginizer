@@ -32,7 +32,7 @@ def PluginHandler(logger, plugin_type, plugins_dir=None, hooks=None):
         bool: True if processing completes successfully, False otherwise.
     """
     try:
-        logger.info('Processing %s plugins...', plugin_type)
+        logger.info("Processing %s plugins...", plugin_type)
         # Create an instance of the PluginManager
         plugin_manager = PluginManager(logger, hooks)
 
@@ -57,14 +57,14 @@ def PluginHandler(logger, plugin_type, plugins_dir=None, hooks=None):
             plugin_instance.execute()
             plugin_instance.process_results()
 
-        logger.info('Processing %s plugins successfully...', plugin_type)
+        logger.info("Processing %s plugins successfully...", plugin_type)
         return True  # Processing completes successfully
     except FileNotFoundError:
         logger.error("Directory '%s' not found...", plugins_dir)
         return False
     except KeyError:
-        logger.exception('KeyError. Please check your configuration...')
+        logger.exception("KeyError. Please check your configuration...")
         return False
     except Exception:
-        logger.exception('An error occurred while processing %s plugins: ', plugin_type)
+        logger.exception("An error occurred while processing %s plugins: ", plugin_type)
         return False

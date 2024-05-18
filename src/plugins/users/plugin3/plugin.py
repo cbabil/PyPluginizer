@@ -10,7 +10,7 @@ class Test2:
             setattr(self, key, value)
 
     def execute(self):
-        self.logger.info('Executing plugin3')
+        self.logger.info("Executing plugin3")
 
     def process_results(self):
-        self.logger.info('Processing results for plugin3')
+        self.logger.info("Processing results for plugin3")

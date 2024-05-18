@@ -1,58 +1,4 @@
 repos:
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.4
-    hooks:
-      - id: ruff
-        args: [ --fix ]
-        exclude: >
-          (?x)(
-              LICENSE$|
-              SECURITY$|
-              README$
-          )
-      - id: ruff-format
-
-  - repo: https://github.com/asottile/reorder_python_imports
-    rev: v3.9.0
-    hooks:
-      - id: reorder-python-imports
-        exclude: (^pypluginizer/tests/, ^pypluginizer/docs/)
-
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v2.2.0
-    hooks:
-      - id: seed-isort-config
-        language_version: python3
-
-  - repo: https://github.com/asottile/blacken-docs
-    rev: 1.13.0
-    hooks:
-      - id: blacken-docs
-        additional_dependencies: [black]
-
-  - repo: https://github.com/psf/black
-    rev: 23.3.0
-    hooks:
-      - id: black
-        language_version: python3.9
-        args:
-          - --skip-string-normalization
-          - --line-length=119
-          - --exclude="""\.git|
-            \.__pycache__|
-            \.tox|
-            \.venv|
-            _build|
-            build|
-            dist"""
-
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-        args: [--profile=black]
-        language_version: python3
-
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
@@ -65,6 +11,45 @@ repos:
       - id: debug-statements
       - id: name-tests-test
         args: [--pytest-test-first]
-      - id: double-quote-string-fixer
       - id: requirements-txt-fixer
       - id: fix-encoding-pragma
+
+  - repo: https://github.com/psf/black
+    rev: 23.3.0
+    hooks:
+      - id: black
+        args:
+          - --skip-string-normalization
+          - --line-length=119
+          - --exclude="""\.git|
+            \.__pycache__|
+            \.tox|
+            \.venv|
+            _build|
+            build|
+            dist"""
+
+  - repo: https://github.com/asottile/seed-isort-config
+    rev: v2.2.0
+    hooks:
+      - id: seed-isort-config
+        language_version: python3
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: [--profile=black]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format
+
+  - repo: https://github.com/asottile/blacken-docs
+    rev: 1.13.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies: [black]

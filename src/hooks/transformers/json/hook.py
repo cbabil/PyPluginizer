@@ -7,4 +7,4 @@ class JsonExporter:
             setattr(self, key, value)
 
     def trigger(self):
-        self.logger.info('Executing JsonExporter hook...')
+        self.logger.info("Executing JsonExporter hook...")
