@@ -17,6 +17,6 @@ app:
   users:
     directory: ./src/plugins/users
 
-  # plugins responsible for exporting data in a particular format.
-  exporters:
-    directory: ./src/plugins/exporters
+  # Hooks
+  hooks:
+    directory: ./src/hooks

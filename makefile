@@ -68,7 +68,7 @@ test: ## Run tests quickly with pytest
 
 # -------------------------------------- Clean Up  --------------------------------------
 .PHONY: clean
-clean: deactivate clean-pyc clean-test clean-logs clean-pre-commit clean-venv ## Remove all virtual environment, test, logs, coverage, pre-commit and Python artiffacts
+clean: deactivate clean-pyc clean-test clean-logs clean-pre-commit clean-venv clean-ruff-cache
 
 deactivate: ## Deactivate virtual environment
 	@echo -e "${COLOR_YELLOW}Checking if virtual environment is still active...${COLOR_RESET}"
@@ -106,3 +106,7 @@ clean-logs: ## Remove logs
 clean-pre-commit: ## Remove pre-commit artifacts
 	@echo -e "${COLOR_YELLOW}Removing pre-commit artifacts...${COLOR_RESET}"
 	rm -fr .git/hooks/pre-commit
+
+clean-ruff-cache: ## Remove ruff cache
+	@echo -e "${COLOR_YELLOW}Removing ruff cache...${COLOR_RESET}"
+	rm -fr .ruff_cache

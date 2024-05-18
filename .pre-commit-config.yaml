@@ -1,34 +1,27 @@
-exclude: >
-    (?x)(
-        LICENSE$|
-        SECURITY$|
-        README$
-    )
 repos:
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
     hooks:
-      - id: flake8
-        language_version: python3
-        additional_dependencies: [flake8-bugbear, flake8-logging-format]
+      - id: ruff
+        args: [ --fix ]
+        exclude: >
+          (?x)(
+              LICENSE$|
+              SECURITY$|
+              README$
+          )
+      - id: ruff-format
 
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v3.9.0
     hooks:
       - id: reorder-python-imports
-        exclude: (^speedtest/tests/, ^speedtest/docs/)
+        exclude: (^pypluginizer/tests/, ^pypluginizer/docs/)
 
   - repo: https://github.com/asottile/seed-isort-config
     rev: v2.2.0
     hooks:
       - id: seed-isort-config
-        language_version: python3
-
-  - repo: https://github.com/pycqa/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-        args: [--profile=black]
         language_version: python3
 
   - repo: https://github.com/asottile/blacken-docs
@@ -44,14 +37,21 @@ repos:
         language_version: python3.9
         args:
           - --skip-string-normalization
-          # these folders wont be formatted by black
-          - --exclude="""\.git |
+          - --line-length=119
+          - --exclude="""\.git|
             \.__pycache__|
             \.tox|
             \.venv|
             _build|
             build|
             dist"""
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        args: [--profile=black]
+        language_version: python3
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0

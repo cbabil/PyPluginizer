@@ -1,8 +1,25 @@
 # -*- coding: utf-8 -*-
+from src.lib.hooks import HookManager
 from src.lib.plugins import PluginManager
 
 
-def PluginHandler(logger, plugin_type, plugins_dir=None):
+def HookHandler(logger, hook_dir=None):
+    """
+    Process hooks of the specified type.
+
+    Args:
+        logger: The logger object for logging messages.
+        hook_dir (str, optional): The directory containing the hooks. If not provided, the current directory is used.
+    """
+
+    # Create an instance of the PluginManager
+    hook_manager = HookManager(logger)
+    # Discover hooks in the specified directory
+    hook_manager.discover(hook_dir)
+    return hook_manager.register() or None
+
+
+def PluginHandler(logger, plugin_type, plugins_dir=None, hooks=None):
     """
     Process plugins of the specified type.
 
@@ -14,10 +31,10 @@ def PluginHandler(logger, plugin_type, plugins_dir=None):
     Returns:
         bool: True if processing completes successfully, False otherwise.
     """
-    logger.info('Processing %s plugins...', plugin_type)
     try:
+        logger.info('Processing %s plugins...', plugin_type)
         # Create an instance of the PluginManager
-        plugin_manager = PluginManager(logger)
+        plugin_manager = PluginManager(logger, hooks)
 
         # Discover plugins in the specified directory
         plugin_manager.discover(plugins_dir)
@@ -26,7 +43,7 @@ def PluginHandler(logger, plugin_type, plugins_dir=None):
         plugin_manager.load()
 
         # Register plugins with the PluginManager
-        plugin_manager.register(logger=logger)
+        plugin_manager.register()
 
         # Get dependencies for each registered plugin
         plugin_manager.get_dependencies()
@@ -40,7 +57,7 @@ def PluginHandler(logger, plugin_type, plugins_dir=None):
             plugin_instance.execute()
             plugin_instance.process_results()
 
-        logger.info('Processing %s plugins sucessfully...', plugin_type)
+        logger.info('Processing %s plugins successfully...', plugin_type)
         return True  # Processing completes successfully
     except FileNotFoundError:
         logger.error("Directory '%s' not found...", plugins_dir)

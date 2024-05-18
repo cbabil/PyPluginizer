@@ -4,7 +4,7 @@ import click
 
 from src import __version__
 from src.lib import config
-from src.lib.handler import PluginHandler
+from src.lib.handler import HookHandler, PluginHandler
 from src.lib.logger import setup_logger
 
 
@@ -46,14 +46,18 @@ def main(ctx, conf):
     args_dict = ctx.params
     logger.debug('Args: %s', args_dict)
 
-    # Construct PluginHandler instance
-    # Process core plugins
-    core_plugins_dir = configuration['app']['core']['directory']
-    PluginHandler(logger, 'core', core_plugins_dir)
+    # Process hooks
+    hooks_dir = configuration['app']['hooks']['directory']
+    hooks = HookHandler(logger, hooks_dir)
 
-    # Process users plugins
-    users_plugins_dir = configuration['app']['users']['directory']
-    PluginHandler(logger, 'users', users_plugins_dir)
+    plugins = {
+        'core': configuration['app']['core']['directory'],
+        'users': configuration['app']['users']['directory'],
+    }
+
+    # Processing core and users plugins
+    for type, path in plugins.items():
+        PluginHandler(logger, type, path, hooks)
 
 
 if __name__ == '__main__':

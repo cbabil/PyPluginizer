@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from src.plugins.users.plugin2.plugin import Test1
+from src.hooks.transformers.json.hook import JsonExporter
 
 
 def get_version():
@@ -12,4 +12,4 @@ def get_version():
 __version__ = get_version()
 
 
-__all__ = ['__version__', 'Test1']
+__all__ = ['__version__', 'JsonExporter']

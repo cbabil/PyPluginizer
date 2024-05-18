@@ -23,9 +23,7 @@ def test_plugin_handler(logger, plugin_manager, mocker):
     mocker.patch.object(plugin_manager, 'register', return_value=None)
     mocker.patch.object(plugin_manager, 'get_dependencies', return_value=None)
     mocker.patch.object(plugin_manager, 'resolve_dependencies', return_value=None)
-    mocker.patch.object(
-        plugin_manager, 'topological_sort', return_value=['plugin1', 'plugin2']
-    )
+    mocker.patch.object(plugin_manager, 'topological_sort', return_value=['plugin1', 'plugin2'])
     plugin_manager.registered_plugins = {
         'plugin1': mocker.Mock(),
         'plugin2': mocker.Mock(),
@@ -62,6 +60,4 @@ def test_plugin_handler_directory_not_found(logger, plugin_manager, mocker):
 
     assert not PluginHandler(logger, 'core_plugins', plugins_dir)
 
-    logger.error.assert_called_with(
-        "Directory '/path/to/nonexistent/plugins' not found..."
-    )
+    logger.error.assert_called_with("Directory '/path/to/nonexistent/plugins' not found...")

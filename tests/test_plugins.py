@@ -16,9 +16,7 @@ def plugin_manager(mocker):
     }
 
     # Assign the mocked plugins to loaded_plugins
-    manager.loaded_plugins = {
-        name: mocker.Mock() for name in discovered_plugins.values()
-    }
+    manager.loaded_plugins = {name: mocker.Mock() for name in discovered_plugins.values()}
 
     manager.plugins = {
         'Plugin': {
@@ -66,9 +64,7 @@ def test_discover(plugin_manager, mocker):
 
     # Assertions
     assert discovered_plugins == plugin_manager.discovered_plugins
-    mock_logger_info.assert_called_once_with(
-        'Discovering plugins in /path/to/plugin_folder'
-    )
+    mock_logger_info.assert_called_once_with('Discovering plugins in /path/to/plugin_folder')
     mock_os_walk.assert_called_once_with('/path/to/plugin_folder')
 
 

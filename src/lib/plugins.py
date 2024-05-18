@@ -2,14 +2,13 @@
 import importlib.util
 import os
 
-from .config import logger
-
 
 class PluginManager:
     """A manager for handling plugins in an application."""
 
-    def __init__(self, logger=logger):
+    def __init__(self, logger, hooks=None):
         """Initialize PluginManager."""
+        self.hooks = hooks
         self.logger = logger
         self.plugins = {}
         self.discovered_plugins = {}
@@ -27,14 +26,8 @@ class PluginManager:
                 self.logger.info('Plugin ignored: %s', module_path)
                 continue  # Skip this plugin if IGNORE file exists
             for file_name in files:
-                if (
-                    file_name.endswith('.py')
-                    and file_name != '__init__.py'
-                    and file_name == 'plugin.py'
-                ):
-                    relative_module_name = os.path.basename(
-                        module_path
-                    )  # Get the last directory name
+                if file_name.endswith('.py') and file_name != '__init__.py' and file_name == 'plugin.py':
+                    relative_module_name = os.path.basename(module_path)  # Get the last directory name
                     self.logger.debug(
                         'Found plugin: %s (%s)',
                         relative_module_name,
@@ -49,18 +42,14 @@ class PluginManager:
         """Load a plugin module."""
         try:
             for module_name, module_path in self.discovered_plugins.items():
-                spec = importlib.util.spec_from_file_location(
-                    module_name, os.path.join(module_path, '__init__.py')
-                )
+                spec = importlib.util.spec_from_file_location(module_name, os.path.join(module_path, '__init__.py'))
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
-                # Get version information
-                version_info = getattr(module, '__version__', 'unknown')
                 # Log loading information
                 self.logger.info(
                     'Loading plugin: %s version %s',
                     module.__name__,
-                    version_info,
+                    module.__version__,
                 )
                 self.logger.debug('Module file path: %s', module.__file__)
                 self.logger.debug('Module contents: %s', dir(module))
@@ -81,21 +70,17 @@ class PluginManager:
             try:
                 module_path = getattr(module, '__file__', None)
                 if module_path is None:
-                    self.logger.error(
-                        'Module file path not found for module: %s', module_name
-                    )
+                    self.logger.error('Module file path not found for module: %s', module_name)
                     continue
                 module_path = os.path.abspath(module_path)
                 module_directory = os.path.dirname(module_path)
             except AttributeError:
-                self.logger.exception(
-                    'Invalid module object for module: %s', module_name
-                )
+                self.logger.exception('Invalid module object for module: %s', module_name)
                 continue
 
             for name, obj in module.__dict__.items():
                 if isinstance(obj, type):
-                    plugin_instance = obj(**kwargs)
+                    plugin_instance = obj(self.logger, self.hooks, **kwargs)
                     self.registered_plugins[name] = plugin_instance
                     # this should be plugin_registered
                     # instead of plugins
@@ -170,15 +155,11 @@ class PluginManager:
                     if all(dep in self.resolved_plugins for dep in dependencies):
                         # Instantiate the plugin if all dependencies are resolved
                         plugin_class = getattr(plugin_info['module'], plugin_name)
-                        plugin_instance = plugin_class()
+                        plugin_instance = plugin_class(self.logger)
                         plugin_info['instance'] = plugin_instance
                         self.resolved_plugins.add(plugin_name)
-                        progress_made = (
-                            True  # Progress has been made in resolving dependencies
-                        )
-                        self.logger.info(
-                            'Resolved dependencies for plugin: %s', plugin_name
-                        )
+                        progress_made = True  # Progress has been made in resolving dependencies
+                        self.logger.info('Resolved dependencies for plugin: %s', plugin_name)
                     else:
                         self.logger.debug(
                             'Plugin %s has unresolved dependencies: %s',
@@ -206,9 +187,7 @@ class PluginManager:
                 with open(dependency_file_path, 'r') as f:
                     content = f.read().strip()  # Read content and strip whitespace
                     if not content:  # Check if content is empty
-                        self.logger.info(
-                            'Dependencies for plugin %s: Not Found', plugin_name
-                        )
+                        self.logger.info('Dependencies for plugin %s: Not Found', plugin_name)
                     else:
                         dependencies = content.split('\n')
                         self.logger.info(
