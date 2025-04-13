@@ -35,6 +35,7 @@ endef
 
 
 setup: ## Install the package in development mode including all dependencies inside a virtualenv (container).
+	@echo -e "${COLOR_YELLOW}Setup the project...${COLOR_RESET}"
 	@if [ ! -d $(VENV) ]; then \
 		echo -e "${COLOR_RED}Virtual environment not found. Please run 'make venv' before running 'make setup'${COLOR_RESET}"; \
 		exit 1; \
@@ -57,10 +58,11 @@ setup: ## Install the package in development mode including all dependencies ins
 
 venv:  ## Create virtualenv environment on local directory.
 	@$(create-venv)
+	@echo -e "${COLOR_GREEN}Venv completed...${COLOR_RESET}"
 
 # -------------------------------------- Project Execution -------------------------------
 run:  ## Run Python app
-	$(PYTHON_VENV) -m $(MAIN_DIR)
+	@$(PYTHON_VENV) -m $(MAIN_DIR)
 
 # -------------------------------------- Test Execution ---------------------------------
 test: ## Run tests quickly with pytest
@@ -110,3 +112,4 @@ clean-pre-commit: ## Remove pre-commit artifacts
 clean-ruff-cache: ## Remove ruff cache
 	@echo -e "${COLOR_YELLOW}Removing ruff cache...${COLOR_RESET}"
 	rm -fr .ruff_cache
+

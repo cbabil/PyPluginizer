@@ -47,9 +47,9 @@ def yaml_parser(file_path: str):
             )
             logger.error("Error context: %s", e.problem)
         return None
-    except Exception:
-        logger.exception(
-            "Error: An unexpected error occurred while parsing the YAML file %s: ",
+    except IOError:
+        logger.error(
+            "Error: An I/O error occurred while accessing the YAML file %s: ",
             file_path,
         )
-        return None
+        return None    

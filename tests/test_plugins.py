@@ -123,27 +123,58 @@ def test_register(plugin_manager, mocker):
         module_mock.__file__ = module_path
         plugin_manager.loaded_plugins[module_name] = module_mock
 
-    print('Before register:', plugin_manager.registered_plugins)
-
     # Call the register method
     registered_plugins = plugin_manager.register()
 
-    print('After register, registered_plugins:', registered_plugins)
-
     # Assertions
     assert len(registered_plugins) == 3
+    assert 'Plugin' in registered_plugins
+    assert 'Plugin1' in registered_plugins
+    assert 'Plugin2' in registered_plugins
 
 
 def test_get_dependencies(plugin_manager):
-    """Test the get_dependencies method."""
-    pass
+    """Test the get_dependencies method of PluginManager."""
+    # Test with a plugin that has dependencies
+    dependencies = plugin_manager.get_dependencies('Plugin2')
+    assert dependencies == ['Plugin', 'Plugin1']
+
+    # Test with a plugin that has no dependencies
+    dependencies = plugin_manager.get_dependencies('Plugin')
+    assert dependencies == []
 
 
 def test_resolve_dependencies(plugin_manager):
-    """Test the resolve_dependencies method."""
-    pass
+    """Test the resolve_dependencies method of PluginManager."""
+    # Test with no dependencies
+    plugin_manager.dependencies = {}
+    resolved = plugin_manager.resolve_dependencies()
+    assert resolved == []
+
+    # Test with simple dependencies
+    plugin_manager.dependencies = {'Plugin1': ['Plugin']}
+    resolved = plugin_manager.resolve_dependencies()
+    assert resolved == [['Plugin'], ['Plugin1']]
+
+    # Test with complex dependencies
+    plugin_manager.dependencies = {'Plugin2': ['Plugin', 'Plugin1'], 'Plugin1': ['Plugin']}
+    resolved = plugin_manager.resolve_dependencies()
+    assert resolved == [['Plugin'], ['Plugin1'], ['Plugin2']]
+    plugin_manager.dependencies = {'Plugin2': ['Plugin', 'Plugin1'], 'Plugin1': ['Plugin'], 'Plugin':[]}
+    resolved = plugin_manager.resolve_dependencies()
+    assert resolved == [['Plugin'], ['Plugin1'], ['Plugin2']]
 
 
 def test_topological_sort(plugin_manager):
     """Test the topological_sort method."""
-    pass
+    # Test with a simple dependency chain
+    plugin_manager.dependencies = {'Plugin2': ['Plugin', 'Plugin1'], 'Plugin1': ['Plugin']}
+    sorted_plugins = plugin_manager.topological_sort()
+    assert sorted_plugins == ['Plugin', 'Plugin1', 'Plugin2']
+
+    # Test with a plugin having no dependencies
+    plugin_manager.dependencies = {'Plugin1': ['Plugin']}
+    sorted_plugins = plugin_manager.topological_sort()
+    assert 'Plugin1' in sorted_plugins
+    assert 'Plugin' in sorted_plugins
+    assert sorted_plugins.index('Plugin') < sorted_plugins.index('Plugin1')

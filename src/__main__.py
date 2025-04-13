@@ -6,20 +6,6 @@ from src import __version__
 from src.lib import config
 from src.lib.handler import HookHandler, PluginHandler
 from src.lib.logger import setup_logger
-
-
-def logs(configuration):
-    """Return the logger format and level from the configuration file"""
-    loglevel = configuration["app"]["logger"]["level"]
-    logformat = configuration["app"]["logger"]["format"]
-    return (loglevel, logformat)
-
-
-def app(configuration):
-    """Return the application name from the configuration file"""
-    return configuration["app"]["name"]
-
-
 @click.command()
 @click.option(
     "--conf",
@@ -37,9 +23,11 @@ def main(ctx, conf):
     #   read the logger format from yml file
     #   if not defined default to something
     #   use the lib/log.py file for this
-    (loglevel, logformat) = logs(configuration)
+    loglevel = configuration["app"]["logger"]["level"]
+    logformat = configuration["app"]["logger"]["format"]
     logger = setup_logger(loglevel, logformat)
-    logger.info("Running %s version %s", app(configuration), __version__)
+    app_name = configuration["app"]["name"]
+    logger.info("Running %s version %s", app_name, __version__)
     logger.info("Using configuration file: %s", conf)
 
     # construct dictionary of all args

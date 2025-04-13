@@ -120,15 +120,15 @@ def test_yaml_parser_generic_exception(mocker):
     mock_open.assert_called_once()
     mock_safe_load.assert_called_once()
 
+def test_yaml_parser_io_error(mocker):
+    """Test IOError case when parsing YAML."""
 
-def test_yaml_parser_unexpected_error(mocker):
-    """Test unexpected error case when parsing YAML."""
-
-    # Mock open to raise a generic exception
-    mock_open = mocker.patch('builtins.open', side_effect=Exception('Unexpected error'))
+    # Mock open to raise an IOError
+    mock_open = mocker.patch('builtins.open', side_effect=IOError('I/O error occurred'))
 
     # Call with fake file path since we mocked open
     output = yaml_parser('fake/path/test.yaml')
 
     assert output is None
     mock_open.assert_called_once()
+
